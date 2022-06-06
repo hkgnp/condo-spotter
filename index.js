@@ -3,16 +3,16 @@ const express = require('express')
 const { convert } = require('html-to-text');
 const puppeteer = require('puppeteer')
 const userAgent = require('user-agents');
-const { sendMail } = require('./sendMail')
+const { sendMail } = require('./utils')
 
 const app = express();
 
-const { URL0, URL1, URL2, URL3 } = process.env
+const { URL0, URL1, URL2, URL3, URL4, URL5 } = process.env
 
-const urls = [URL0, URL1, URL2, URL3]
+const urls = [URL0, URL1, URL2, URL3, URL4, URL5]
 
 async function main() {
-    let noOfUnits = [0, 0, 0, 0];
+    let noOfUnits = [0, 0, 0, 0, 0, 0];
 
     setInterval(function() {
         puppeteer.launch({ headless: true }).then(async browser => {
@@ -30,6 +30,7 @@ async function main() {
             console.log(`No. of units for Summer Hill (Property Guru): ${summerHillCountPG}`)
 
             // Get for Summerhill - 99.co
+            await gotoProperty(page, urls[1])
             await page.goto(urls[1])
             const summerHillContent99 = await page.content();
             let summerHillCount99 = convert(summerHillContent99, {
@@ -37,7 +38,7 @@ async function main() {
                 baseElements: { selectors: ["div#active_listings"] },
                 wordwrap: false,
             })
-            summerHillCount99 = (summerHillCountPG.substring(summerHillCountPG.indexOf("active listings for rent and sale") - 3).substring(0, 2))
+            summerHillCount99 = (summerHillCount99.substring(summerHillCount99.indexOf("active listings for rent and sale") - 3).substring(0, 2))
             console.log(`No. of units for Summer Hill (99.co): ${summerHillCount99}`)
 
             // Get for Hillington - Property Guru
@@ -60,6 +61,26 @@ async function main() {
             hillingtonCount99 = hillingtonCount99.substring(hillingtonCount99.indexOf("active listings for rent and sale") - 3).substring(0, 2)
             console.log(`No. of units for Hillington Green (99.co): ${hillingtonCount99}`)
 
+            // Get for Signature Park - Property Guru
+            await page.goto(urls[4])
+            const signatureParkContentPG = await page.content();
+            let signatureParkCountPG = convert(signatureParkContentPG, {
+                baseElements: { selectors: ["div.sale-rent-cta"] },
+                wordwrap: false,
+            })
+            signatureParkCountPG = signatureParkCountPG.substring(4, 5)
+            console.log(`No. of units for Signature Park (Property Guru): ${signatureParkCountPG}`)
+
+            // Get for Signature Park - 99.co
+            await page.goto(urls[5])
+            const signatureParkContent99 = await page.content();
+            let signatureParkCount99 = convert(signatureParkContent99, {
+                baseElements: { selectors: ["div#active_listings"] },
+                wordwrap: false,
+            })
+            signatureParkCount99 = (signatureParkCount99.substring(signatureParkCount99.indexOf("active listings for rent and sale") - 3).substring(0, 2))
+            console.log(`No. of units for Signature Park (99.co): ${signatureParkCount99}`)
+
             await browser.close()
 
             if (summerHillCountPG !== noOfUnits[0]) {
@@ -80,6 +101,14 @@ async function main() {
             if (hillingtonCount99 !== noOfUnits[3]) {
                 sendMail('HILLINGTON (99.co)', hillingtonCount99)
                 noOfUnits[3] = hillingtonCount99
+            }
+            if (signatureParkCountPG !== noOfUnits[4]) {
+                sendMail('SIGNATURE PARK (Property Guru)', signatureParkCountPG)
+                noOfUnits[4] = signatureParkCountPG
+            }
+            if (signatureParkCount99 !== noOfUnits[5]) {
+                sendMail('SIGNATURE PARK (99.co)', signatureParkCount99)
+                noOfUnits[5] = signatureParkCount99
             }
         })
     }, 1000 * 60 * 15)

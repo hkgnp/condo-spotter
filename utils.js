@@ -25,7 +25,7 @@ function sendMail(name, count) {
         if (error) {
             console.log(error);
         } else {
-            console.log('HILLINGTON Email sent: ' + info.response);
+            console.log(`${name} Email Seng: ${info.response}`)
         }
     });
 }
