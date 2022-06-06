@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 
-const {HOST, USER, PASS} = process.env
+const { HOST, USER, PASS } = process.env
 
 const mailTransporter = nodemailer.createTransport({
     host: HOST,
