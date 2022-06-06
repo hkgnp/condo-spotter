@@ -30,7 +30,6 @@ async function main() {
             console.log(`No. of units for Summer Hill (Property Guru): ${summerHillCountPG}`)
 
             // Get for Summerhill - 99.co
-            await gotoProperty(page, urls[1])
             await page.goto(urls[1])
             const summerHillContent99 = await page.content();
             let summerHillCount99 = convert(summerHillContent99, {
@@ -61,25 +60,26 @@ async function main() {
             hillingtonCount99 = hillingtonCount99.substring(hillingtonCount99.indexOf("active listings for rent and sale") - 3).substring(0, 2)
             console.log(`No. of units for Hillington Green (99.co): ${hillingtonCount99}`)
 
-            // Get for Signature Park - Property Guru
-            await page.goto(urls[4])
-            const signatureParkContentPG = await page.content();
-            let signatureParkCountPG = convert(signatureParkContentPG, {
-                baseElements: { selectors: ["div.sale-rent-cta"] },
-                wordwrap: false,
-            })
-            signatureParkCountPG = signatureParkCountPG.substring(4, 5)
-            console.log(`No. of units for Signature Park (Property Guru): ${signatureParkCountPG}`)
+            //    // Get for Signature Park - Property Guru
+            //    await page.goto(urls[4])
+            //    const signatureParkContentPG = await page.content();
+            //    let signatureParkCountPG = convert(signatureParkContentPG, {
+            //        baseElements: { selectors: ["div.sale-rent-cta"] },
+            //        wordwrap: false,
+            //    })
+            //    console.log(signatureParkCountPG)
+            //    signatureParkCountPG = signatureParkCountPG.substring(4, 5)
+            //    console.log(`No. of units for Signature Park (Property Guru): ${signatureParkCountPG}`)
 
-            // Get for Signature Park - 99.co
-            await page.goto(urls[5])
-            const signatureParkContent99 = await page.content();
-            let signatureParkCount99 = convert(signatureParkContent99, {
-                baseElements: { selectors: ["div#active_listings"] },
-                wordwrap: false,
-            })
-            signatureParkCount99 = (signatureParkCount99.substring(signatureParkCount99.indexOf("active listings for rent and sale") - 3).substring(0, 2))
-            console.log(`No. of units for Signature Park (99.co): ${signatureParkCount99}`)
+            //    // Get for Signature Park - 99.co
+            //    await page.goto(urls[5])
+            //    const signatureParkContent99 = await page.content();
+            //    let signatureParkCount99 = convert(signatureParkContent99, {
+            //        baseElements: { selectors: ["div#active_listings"] },
+            //        wordwrap: false,
+            //    })
+            //    signatureParkCount99 = (signatureParkCount99.substring(signatureParkCount99.indexOf("active listings for rent and sale") - 3).substring(0, 2))
+            //    console.log(`No. of units for Signature Park (99.co): ${signatureParkCount99}`)
 
             await browser.close()
 
@@ -102,14 +102,14 @@ async function main() {
                 sendMail('HILLINGTON (99.co)', hillingtonCount99)
                 noOfUnits[3] = hillingtonCount99
             }
-            if (signatureParkCountPG !== noOfUnits[4]) {
-                sendMail('SIGNATURE PARK (Property Guru)', signatureParkCountPG)
-                noOfUnits[4] = signatureParkCountPG
-            }
-            if (signatureParkCount99 !== noOfUnits[5]) {
-                sendMail('SIGNATURE PARK (99.co)', signatureParkCount99)
-                noOfUnits[5] = signatureParkCount99
-            }
+            //     if (signatureParkCountPG !== noOfUnits[4]) {
+            //         sendMail('SIGNATURE PARK (Property Guru)', signatureParkCountPG)
+            //         noOfUnits[4] = signatureParkCountPG
+            //     }
+            //     if (signatureParkCount99 !== noOfUnits[5]) {
+            //         sendMail('SIGNATURE PARK (99.co)', signatureParkCount99)
+            //         noOfUnits[5] = signatureParkCount99
+            //     }
         })
     }, 1000 * 60 * 15)
 }

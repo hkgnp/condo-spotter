@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 
-const { HOST, USER, PASS } = process.env
+const { HOST, USERNAME, PASS } = process.env
 
 const mailTransporter = nodemailer.createTransport({
     host: HOST,
@@ -8,7 +8,7 @@ const mailTransporter = nodemailer.createTransport({
     secure: false,
     requireTLS: true,
     auth: {
-        user: USER,
+        user: USERNAME,
         pass: PASS,
     },
 });
@@ -25,7 +25,7 @@ function sendMail(name, count) {
         if (error) {
             console.log(error);
         } else {
-            console.log(`${name} Email Seng: ${info.response}`)
+            console.log(`${name} Email Sent: ${info.response}`)
         }
     });
 }
