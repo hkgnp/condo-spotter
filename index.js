@@ -64,18 +64,22 @@ async function main() {
 
             if (summerHillCountPG !== noOfUnits[0]) {
                 sendMail('SUMMERHILL (Property Guru)', summerHillCountPG)
+                noOfUnits[0] = summerHillCountPG
             }
 
             if (summerHillCount99 !== noOfUnits[1]) {
                 sendMail('SUMMERHILL (99.co)', summerHillCount99)
+                noOfUnits[1] = summerHillCount99
             }
 
             if (hillingtonCountPG !== noOfUnits[2]) {
                 sendMail('HILLINGTON (Property Guru)', hillingtonCountPG)
+                noOfUnits[2] = hillingtonCountPG
             }
 
             if (hillingtonCount99 !== noOfUnits[3]) {
                 sendMail('HILLINGTON (99.co)', hillingtonCount99)
+                noOfUnits[3] = hillingtonCount99
             }
         })
     }, 1000 * 60 * 15)
