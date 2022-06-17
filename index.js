@@ -7,7 +7,7 @@ const app = express();
 const { URL6, URL7 } = process.env;
 
 async function main() {
-  let noOfUnitsFiltered = [0, 0];
+  let noOfUnitsFiltered = [0, 0, 0];
 
   setInterval(async function () {
     const signatureParkCountFiltered = await accessPage(URL6);
@@ -28,6 +28,17 @@ async function main() {
     }
     console.log(
       `${new Date()} No. of units for Hillington Green: ${hillingtonGreenCountFiltered}`
+    );
+
+    await new Promise((r) => setTimeout(r, 1000 * 60 * 1));
+
+    const summerHillCountFiltered = await accessPage(URL8);
+    if (summerHillCountFiltered !== noOfUnitsFiltered[2]) {
+      sendMail("Summer Hill", summerHillCountFiltered);
+      noOfUnitsFiltered[2] = summerHillCountFiltered;
+    }
+    console.log(
+      `${new Date()} No. of units for Summer Hill: ${summerHillCountFiltered}`
     );
   }, 1000 * 60 * 15);
 }

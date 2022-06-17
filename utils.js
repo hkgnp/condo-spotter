@@ -52,7 +52,11 @@ async function accessPage(url) {
     baseElements: { selectors: ["span.shorten-search-summary-title"] },
     wordwrap: false,
   });
-  count = parseInt(count.substring(0, 1));
+  if (count.startsWith("No")) {
+    count = 0;
+  } else {
+    count = parseInt(count.substring(0, 1));
+  }
   await browser.close();
   return count;
 }
