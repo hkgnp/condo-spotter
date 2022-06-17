@@ -4,7 +4,7 @@ const { sendMail, accessPage } = require("./utils");
 
 const app = express();
 
-const { URL6, URL7 } = process.env;
+const { URL6, URL7, URL8 } = process.env;
 
 async function main() {
   let noOfUnitsFiltered = [0, 0, 0];
