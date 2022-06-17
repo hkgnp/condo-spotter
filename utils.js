@@ -52,6 +52,7 @@ async function accessPage(url) {
     baseElements: { selectors: ["span.shorten-search-summary-title"] },
     wordwrap: false,
   });
+  console.log(count);
   if (count.startsWith("No")) {
     count = 0;
   } else {

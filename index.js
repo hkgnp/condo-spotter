@@ -19,7 +19,7 @@ async function main() {
       `${new Date()} No. of units for Signature Park - 3 bedrooms: ${signatureParkCountFiltered}`
     );
 
-    await new Promise((r) => setTimeout(r, 1000 * 60 * 1));
+    await new Promise((r) => setTimeout(r, 1000 * 60 * 3));
 
     const hillingtonGreenCountFiltered = await accessPage(URL7);
     if (hillingtonGreenCountFiltered !== noOfUnitsFiltered[1]) {
@@ -30,7 +30,7 @@ async function main() {
       `${new Date()} No. of units for Hillington Green: ${hillingtonGreenCountFiltered}`
     );
 
-    await new Promise((r) => setTimeout(r, 1000 * 60 * 1));
+    await new Promise((r) => setTimeout(r, 1000 * 60 * 3));
 
     const summerHillCountFiltered = await accessPage(URL8);
     if (summerHillCountFiltered !== noOfUnitsFiltered[2]) {
